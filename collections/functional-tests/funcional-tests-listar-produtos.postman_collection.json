@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "3a899f27-58ba-496d-b1e7-3ee01df15da7",
+		"name": "Testes Funcionais de API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "4067931"
+	},
+	"item": [
+						{
+							"name": "Listar produtos",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"try {\r",
+											"    const response = await pm.sendRequest({\r",
+											"        url: \"https://postman-echo.com/get\",\r",
+											"        method: \"GET\"\r",
+											"    });\r",
+											"\r",
+											"    console.log(response.json());\r",
+											"} catch (err) {\r",
+											"    console.error(err);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code é 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validação da estrutura de resposta - Listagem de Produtos\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).to.be.an(\"object\");\r",
+											"    pm.expect(jsonData).to.have.property(\"quantidade\").that.is.a(\"number\");\r",
+											"    pm.expect(jsonData).to.have.property(\"produtos\").that.is.an(\"array\");\r",
+											"    \r",
+											"    jsonData.produtos.forEach(function(produto) {\r",
+											"        pm.expect(produto).to.be.an(\"object\");\r",
+											"        pm.expect(produto).to.have.property(\"nome\").that.is.a(\"string\");\r",
+											"        pm.expect(produto).to.have.property(\"preco\").that.is.a(\"number\");\r",
+											"        pm.expect(produto).to.have.property(\"descricao\").that.is.a(\"string\");\r",
+											"        pm.expect(produto).to.have.property(\"quantidade\").that.is.a(\"number\");\r",
+											"        pm.expect(produto).to.have.property(\"_id\").that.is.a(\"string\");\r",
+											"    });\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": "{{baseUrl}}/produtos"
+							},
+							"response": [
+								{
+									"name": "Lista de produtos",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/produtos?_id=<string>&nome=<string>&preco=<integer>&descricao=<string>&quantidade=<integer>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"produtos"
+											],
+											"query": [
+												{
+													"key": "_id",
+													"value": "<string>"
+												},
+												{
+													"key": "nome",
+													"value": "<string>"
+												},
+												{
+													"key": "preco",
+													"value": "<integer>"
+												},
+												{
+													"key": "descricao",
+													"value": "<string>"
+												},
+												{
+													"key": "quantidade",
+													"value": "<integer>"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"quantidade\": \"<number>\",\n  \"produtos\": [\n    {\n      \"nome\": \"<string>\",\n      \"preco\": \"<integer>\",\n      \"descricao\": \"<string>\",\n      \"quantidade\": \"<integer>\",\n      \"_id\": \"<string>\"\n    },\n    {\n      \"nome\": \"<string>\",\n      \"preco\": \"<integer>\",\n      \"descricao\": \"<string>\",\n      \"quantidade\": \"<integer>\",\n      \"_id\": \"<string>\"\n    }\n  ]\n}"
+								}
+							]
+						}
+					
+        ]
+}   
+                
+        
